@@ -1,0 +1,17 @@
+{
+    "apptitle": "Resume builder",
+    "addsection": "Add section",
+    "professionalexperience.title": "Professional experience",
+    "professionalexperience.jobtitle": "Job Title",
+    "professionalexperience.employer": "Employer",
+    "education.title": "Education",
+    "city": "City",
+    "country": "Country",
+    "description": "Description",
+    "professionalexperience.additemlabel": "Add experience",
+    "education.degree": "Degree",
+    "education.school": "School",
+    "education.additemlabel": "Add education",
+    "downloadresume": "Download resume",
+    "skills.title": "Skills"
+}

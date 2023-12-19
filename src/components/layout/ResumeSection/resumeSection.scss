@@ -1,0 +1,14 @@
+.resumeSection {
+    border: 1px solid #000;
+    padding: 20px;
+
+    .title {
+        margin: 0;
+    }
+
+    .titleWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

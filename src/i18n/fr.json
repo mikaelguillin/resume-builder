@@ -1,0 +1,17 @@
+{
+    "apptitle": "Resume builder",
+    "addsection": "Ajouter une section",
+    "professionalexperience.title": "Experience professionnelle",
+    "professionalexperience.jobtitle": "Titre du poste",
+    "professionalexperience.employer": "Employeur",
+    "education.title": "Formation",
+    "city": "Ville",
+    "country": "Pays",
+    "description": "Description",
+    "professionalexperience.additemlabel": "Ajouter une experience",
+    "education.degree": "Diplome",
+    "education.school": "Etablissement",
+    "education.additemlabel": "Ajouter une formation",
+    "downloadresume": "Télécharger le CV",
+    "skills.title": "Compétences"
+}
