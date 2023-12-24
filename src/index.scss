@@ -1,5 +1,16 @@
 @import 'normalize';
 
+body {
+    background: #eee;
+}
+
+.box {
+    background: #fff;
+    border: 1px solid #bbb;
+    border-radius: 10px;
+    padding: 20px;
+}
+
 .formGroup {
     display: flex;
     column-gap: 20px;

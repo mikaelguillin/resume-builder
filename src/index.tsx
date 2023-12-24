@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './i18n';
+import { Provider } from 'react-redux';
+import './i18n/i18n';
+import store from './store/store';
 
 import './index.scss';
 
@@ -11,7 +13,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
-        <App />
+        <Provider store={store}>
+            <App />
+        </Provider>
     </React.StrictMode>,
 );
 

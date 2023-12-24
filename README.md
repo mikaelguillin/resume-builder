@@ -1,46 +1,55 @@
-# Getting Started with Create React App
+# Resume Builder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Quickly build your resume 🚀
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This app is a user-friendly tool designed to simplify the process of creating professional resumes. Whether you are a job seeker, student, or professional, this application provides an intuitive interface for crafting well-structured and visually appealing CVs.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+-   **Section-based Editing:** Organize your CV with dedicated sections such as Experience, Education, Skills, and more.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+-   **Dynamic Templates:** Choose from a variety of templates to give your CV a unique and polished look.
 
-### `npm test`
+-   **Real-time Preview:** See your changes instantly with a live preview of your CV as you edit.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   **Export Options:** Download your CV in various formats (PDF, Word) for easy sharing with potential employers.
 
-### `npm run build`
+## Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Make sure you have [Node.js](https://nodejs.org/) installed.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installation
 
-### `npm run eject`
+1. Clone the repository:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    ```bash
+    git clone https://github.com/mikaelguillin/resume-builder.git
+    ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Navigate to the project directory:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    ```bash
+    cd resume-builder
+    ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+3. Install dependencies:
 
-## Learn More
+    ```bash
+    npm install
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Usage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Start the application:
+
+    ```bash
+    npm start
+    ```
+
+2. Open your browser and visit http://localhost:3000.
+
+3. Begin creating your CV by adding sections, filling in details, and selecting templates.

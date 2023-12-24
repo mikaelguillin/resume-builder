@@ -42,12 +42,12 @@ export type FormElement =
 
 export type FormProps = {
     onSubmit: (data: any) => void /** Callback function after submission */;
-    submitButton: {
-        text?: string;
+    submitButton?: {
+        text: string;
         props?: React.ComponentProps<'button'>;
     } /** Used to customize submit button */;
     elements: FormElement[] /** Array of fields */;
     hookForm: UseFormReturn<FieldValues, any> /** Form hook object */;
-    cancelButton?: { text?: string; props?: React.ComponentProps<'button'> };
+    cancelButton?: { text: string; props?: React.ComponentProps<'button'> };
     onCancel?: () => void;
 };

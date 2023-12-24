@@ -1,12 +1,16 @@
 import { FormElement } from '../form/FormTypes';
 
-export const configSection = {
-    key: 'education',
-    title: 'education.title',
-    addItemLabel: 'education.additemlabel',
-};
+interface ExperienceItemProps {
+    jobTitle: string;
+    employer: string;
+    city: string;
+    country: string;
+    description: string;
+    onClick: () => void;
+    onDelete: () => void;
+}
 
-export const formElements: FormElement[] = [
+const formElements: FormElement[] = [
     {
         key: 'id',
         type: 'input',
@@ -15,27 +19,27 @@ export const formElements: FormElement[] = [
         },
     },
     {
-        key: 'degree',
+        key: 'jobTitle',
         type: 'input',
-        label: 'education.degree',
+        label: 'professionalexperience.jobtitle',
         inputProps: {
-            id: 'degree',
-            placeholder: 'Degree',
+            id: 'jobTitle',
+            placeholder: 'Job Title',
         },
         registerOptions: {
-            required: 'Degree is required',
+            required: 'Job title is required',
         },
     },
     {
-        key: 'school',
+        key: 'employer',
         type: 'input',
-        label: 'education.school',
+        label: 'professionalexperience.employer',
         inputProps: {
-            id: 'school',
-            placeholder: 'School',
+            id: 'employer',
+            placeholder: 'Employer',
         },
         registerOptions: {
-            required: 'School is required',
+            required: 'Employer is required',
         },
     },
     {
@@ -65,7 +69,7 @@ export const formElements: FormElement[] = [
     {
         key: 'description',
         type: 'textarea',
-        label: 'Description',
+        label: 'description',
         textareaProps: {
             id: 'description',
             placeholder: 'Description',
@@ -73,34 +77,38 @@ export const formElements: FormElement[] = [
     },
 ];
 
-export interface IItem {
-    degree: string;
-    school: string;
-    city: string;
-    country: string;
-    description: string;
-    onClick: () => void;
-}
+export const configSection = {
+    key: 'experience',
+    title: 'professionalexperience.title',
+    addItemLabel: 'professionalexperience.additemlabel',
+    formElements,
+};
 
 export const Item = ({
-    degree,
-    school,
+    jobTitle,
+    employer,
     city,
     country,
     description,
     onClick,
-}: IItem) => {
+    onDelete,
+}: ExperienceItemProps) => {
     return (
         <div className="resumeSectionItem" onClick={onClick}>
             <h3>
-                {degree}, <i>{school}</i>
+                {jobTitle}, <i>{employer}</i>
             </h3>
-            {(city || country) && (
-                <div>
-                    {city}, {country}
-                </div>
-            )}
-            {description && <p>{description}</p>}
+            <div>
+                {(city || country) && (
+                    <div>
+                        {city}, {country}
+                    </div>
+                )}
+                {description && <p>{description}</p>}
+            </div>
+            <button type="button" onClick={onDelete}>
+                Supprimer
+            </button>
         </div>
     );
 };

@@ -31,6 +31,7 @@ export const Input = ({
                 {...register(element.key, {
                     ...element.registerOptions,
                 })}
+                autoComplete="off"
             />
             {hookForm.formState.errors[element.key] && (
                 <div className="formError" role="alert">

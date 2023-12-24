@@ -1,6 +1,7 @@
 import React from 'react';
 import { RenderFormControl } from '../FormElement';
 import { FormProps } from '../FormTypes';
+import { useTranslation } from 'react-i18next';
 
 export const Form = ({
     elements,
@@ -10,9 +11,10 @@ export const Form = ({
     cancelButton,
     hookForm,
 }: FormProps) => {
+    const { t } = useTranslation();
     return (
         <form onSubmit={hookForm.handleSubmit(onSubmit)} noValidate>
-            <div className="">
+            <div>
                 {elements.map((res, key) => {
                     if (res.group) {
                         return (
@@ -48,14 +50,14 @@ export const Form = ({
                 })}
             </div>
             <div className="buttons">
-                {onCancel && cancelButton && (
+                {onCancel && (
                     <button
                         className="button"
                         type="button"
                         onClick={onCancel}
                         {...cancelButton?.props}
                     >
-                        {cancelButton?.text || 'Cancel'}
+                        {cancelButton?.text || t('cancel')}
                     </button>
                 )}
                 <button
@@ -63,7 +65,7 @@ export const Form = ({
                     type="submit"
                     {...submitButton?.props}
                 >
-                    {submitButton?.text || 'Submit'}
+                    {submitButton?.text || t('save')}
                 </button>
             </div>
         </form>

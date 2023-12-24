@@ -1,12 +1,15 @@
 import { FormElement } from '../form/FormTypes';
 
-export const configSection = {
-    key: 'experience',
-    title: 'professionalexperience.title',
-    addItemLabel: 'professionalexperience.additemlabel',
-};
+export interface EducationItemProps {
+    degree: string;
+    school: string;
+    city: string;
+    country: string;
+    description: string;
+    onClick: () => void;
+}
 
-export const formElements: FormElement[] = [
+const formElements: FormElement[] = [
     {
         key: 'id',
         type: 'input',
@@ -15,27 +18,27 @@ export const formElements: FormElement[] = [
         },
     },
     {
-        key: 'jobTitle',
+        key: 'degree',
         type: 'input',
-        label: 'professionalexperience.jobtitle',
+        label: 'education.degree',
         inputProps: {
-            id: 'jobTitle',
-            placeholder: 'Job Title',
+            id: 'degree',
+            placeholder: 'Degree',
         },
         registerOptions: {
-            required: 'Job title is required',
+            required: 'Degree is required',
         },
     },
     {
-        key: 'employer',
+        key: 'school',
         type: 'input',
-        label: 'professionalexperience.employer',
+        label: 'education.school',
         inputProps: {
-            id: 'employer',
-            placeholder: 'Employer',
+            id: 'school',
+            placeholder: 'School',
         },
         registerOptions: {
-            required: 'Employer is required',
+            required: 'School is required',
         },
     },
     {
@@ -65,7 +68,7 @@ export const formElements: FormElement[] = [
     {
         key: 'description',
         type: 'textarea',
-        label: 'description',
+        label: 'Description',
         textareaProps: {
             id: 'description',
             placeholder: 'Description',
@@ -73,41 +76,32 @@ export const formElements: FormElement[] = [
     },
 ];
 
-interface ExperienceItem {
-    jobTitle: string;
-    employer: string;
-    city: string;
-    country: string;
-    description: string;
-    onClick: () => void;
-    onDelete: () => void;
-}
+export const configSection = {
+    key: 'education',
+    title: 'education.title',
+    addItemLabel: 'education.additemlabel',
+    formElements,
+};
 
 export const Item = ({
-    jobTitle,
-    employer,
+    degree,
+    school,
     city,
     country,
     description,
     onClick,
-    onDelete,
-}: ExperienceItem) => {
+}: EducationItemProps) => {
     return (
         <div className="resumeSectionItem" onClick={onClick}>
             <h3>
-                {jobTitle}, <i>{employer}</i>
+                {degree}, <i>{school}</i>
             </h3>
-            <div>
-                {(city || country) && (
-                    <div>
-                        {city}, {country}
-                    </div>
-                )}
-                {description && <p>{description}</p>}
-            </div>
-            <button type="button" onClick={onDelete}>
-                Supprimer
-            </button>
+            {(city || country) && (
+                <div>
+                    {city}, {country}
+                </div>
+            )}
+            {description && <p>{description}</p>}
         </div>
     );
 };

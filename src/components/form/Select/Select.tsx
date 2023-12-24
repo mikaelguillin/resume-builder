@@ -1,5 +1,5 @@
 import { FormSelectElement } from '../FormTypes';
-import { FieldValues, UseFormProps, UseFormReturn } from 'react-hook-form';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
 
 export const Select = ({
     element,
