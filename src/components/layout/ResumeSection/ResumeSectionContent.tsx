@@ -12,11 +12,9 @@ import {
     ResumeSection,
     SectionItem,
 } from '@store/resume/resume.slice';
-
 import { Form } from '@components/form';
-
-import './resumeSection.scss';
 import { saveState } from '@/browser-storage';
+import { Button } from '@chakra-ui/react';
 
 export interface ResumeSectionItemProps {
     id: string;
@@ -33,11 +31,11 @@ export const ResumeSectionContent = ({
 }) => {
     const { t } = useTranslation();
     const hookForm = useForm();
-    const [editMode, setEditMode] = useState(false);
     const dispatch = useDispatch();
     const items = useSelector((state: AppState) =>
         selectItemsBySection(state, config.key),
     );
+    const [editMode, setEditMode] = useState(items.length ? false : true);
 
     const addItem = () => {
         setEditMode(true);
@@ -64,8 +62,14 @@ export const ResumeSectionContent = ({
 
     const handleItemClick = (item: SectionItem) => {
         setEditMode(true);
-        for (const { key } of config.formElements) {
-            hookForm.setValue(key, (item as any)[key]); // Remove any
+        for (const { key, group } of config.formElements) {
+            if (group) {
+                for (const element of group) {
+                    hookForm.setValue(element.key, (item as any)[element.key]);
+                }
+            } else {
+                hookForm.setValue(key, (item as any)[key]);
+            }
         }
     };
 
@@ -101,9 +105,10 @@ export const ResumeSectionContent = ({
                             }}
                         />
                     ))}
-                    <button className="button" type="button" onClick={addItem}>
+
+                    <Button colorScheme="blue" onClick={addItem} marginTop={5}>
                         {t(config.addItemLabel)}
-                    </button>
+                    </Button>
                 </div>
             )}
         </div>

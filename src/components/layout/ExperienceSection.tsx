@@ -1,4 +1,6 @@
+import { Box, Flex, Heading, IconButton } from '@chakra-ui/react';
 import { FormElement } from '../form/FormTypes';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 interface ExperienceItemProps {
     jobTitle: string;
@@ -94,21 +96,29 @@ export const Item = ({
     onDelete,
 }: ExperienceItemProps) => {
     return (
-        <div className="resumeSectionItem" onClick={onClick}>
-            <h3>
-                {jobTitle}, <i>{employer}</i>
-            </h3>
-            <div>
-                {(city || country) && (
+        <Box borderWidth={1} borderRadius="lg" padding={3} onClick={onClick}>
+            <Flex>
+                <div>
+                    <Heading fontSize="xl" as="h3">
+                        {jobTitle}, <i>{employer}</i>
+                    </Heading>
                     <div>
-                        {city}, {country}
+                        {(city || country) && (
+                            <div>
+                                {city}, {country}
+                            </div>
+                        )}
+                        {/* {description && <p>{description}</p>} */}
                     </div>
-                )}
-                {description && <p>{description}</p>}
-            </div>
-            <button type="button" onClick={onDelete}>
-                Supprimer
-            </button>
-        </div>
+                </div>
+                <IconButton
+                    aria-label="Supprimer"
+                    variant="ghost"
+                    icon={<DeleteIcon />}
+                    onClick={onDelete}
+                    marginLeft="auto"
+                />
+            </Flex>
+        </Box>
     );
 };

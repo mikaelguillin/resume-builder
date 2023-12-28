@@ -2,6 +2,8 @@ import React from 'react';
 import { RenderFormControl } from '../FormElement';
 import { FormProps } from '../FormTypes';
 import { useTranslation } from 'react-i18next';
+import { Box, Button, ButtonGroup } from '@chakra-ui/react';
+import { Flex, Spacer } from '@chakra-ui/react';
 
 export const Form = ({
     elements,
@@ -12,62 +14,65 @@ export const Form = ({
     hookForm,
 }: FormProps) => {
     const { t } = useTranslation();
+
     return (
         <form onSubmit={hookForm.handleSubmit(onSubmit)} noValidate>
             <div>
                 {elements.map((res, key) => {
                     if (res.group) {
                         return (
-                            <div
+                            <Flex
+                                marginTop={2}
+                                justifyContent="center"
                                 key={`form-element-${res.key}-${key}`}
-                                className="formGroup"
                             >
-                                {res.group.map((resItem, keyItem) => (
-                                    <div
+                                {res.group.map((resItem, keyItem, group) => (
+                                    <React.Fragment
                                         key={`form-element-${resItem.key}-${keyItem}`}
-                                        className="formControl"
                                     >
-                                        <RenderFormControl
-                                            element={resItem}
-                                            hookForm={hookForm}
-                                        />
-                                    </div>
+                                        <Box flex={'auto'}>
+                                            <RenderFormControl
+                                                element={resItem}
+                                                hookForm={hookForm}
+                                            />
+                                        </Box>
+                                        {keyItem < group.length - 1 && (
+                                            <Spacer maxWidth={5} />
+                                        )}
+                                    </React.Fragment>
                                 ))}
-                            </div>
+                            </Flex>
                         );
                     }
                     return (
-                        <div
+                        <Box
                             key={`form-element-${res.key}-${key}`}
                             className="formControl"
+                            marginTop={2}
                         >
                             <RenderFormControl
                                 element={res}
                                 hookForm={hookForm}
                             />
-                        </div>
+                        </Box>
                     );
                 })}
             </div>
-            <div className="buttons">
+            <ButtonGroup variant="outline" spacing="6" marginTop={3}>
                 {onCancel && (
-                    <button
-                        className="button"
-                        type="button"
+                    <Button
+                        colorScheme="red"
                         onClick={onCancel}
-                        {...cancelButton?.props}
+                        variant="ghost"
                     >
                         {cancelButton?.text || t('cancel')}
-                    </button>
+                    </Button>
                 )}
-                <button
-                    className="button"
-                    type="submit"
-                    {...submitButton?.props}
-                >
+
+                <Button type="submit" colorScheme="blue">
                     {submitButton?.text || t('save')}
-                </button>
-            </div>
+                </Button>
+            </ButtonGroup>
         </form>
     );
 };

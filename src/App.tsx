@@ -2,7 +2,6 @@ import React, { useState, ComponentType, useEffect, useCallback } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { upperFirst } from 'lodash';
-import Collapsible from 'react-collapsible';
 import { useDispatch, useSelector } from 'react-redux';
 import { PersonalDetails } from './components/layout/PersonalDetails';
 import AddContent from './components/layout/AddContent';
@@ -18,6 +17,18 @@ import {
 } from './store/resume/resume.slice';
 import { saveState } from '@/browser-storage';
 import store from '@store/store';
+import {
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
+    Box,
+    Flex,
+    Heading,
+    IconButton,
+} from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 interface SectionComponents {
     name: string;
@@ -29,7 +40,6 @@ const App = () => {
     const dispatch = useDispatch();
     const sections = useSelector(selectSections);
     const [sectionCmps, setSectionCmps] = useState<SectionComponents[]>([]);
-    const [currentOpen, setCurrentOpen] = useState<string>('');
 
     const loadContent = useCallback(() => {
         const loadedSectionCmps = sections.map(async (section) => {
@@ -48,12 +58,6 @@ const App = () => {
     useEffect(() => {
         loadContent();
     }, [loadContent]);
-
-    const handleDeleteSection = (key: string) => {
-        dispatch(deleteSection(key));
-        setSectionCmps(sectionCmps.filter((sc) => sc.name !== key));
-        saveState(store.getState());
-    };
 
     const addContent = async (key: string) => {
         if (!sections.some((s) => s.name === key)) {
@@ -81,48 +85,66 @@ const App = () => {
         }
     };
 
-    const handleTriggerClick = (key?: string | number) => {
-        if (!key || key === currentOpen) {
-            setCurrentOpen('');
-        } else {
-            setCurrentOpen(key as string);
-        }
+    const handleDeleteSectionClick = (
+        e: React.MouseEvent<HTMLButtonElement>,
+        key: string,
+    ) => {
+        e.stopPropagation();
+        dispatch(deleteSection(key));
+        setSectionCmps(sectionCmps.filter((sc) => sc.name !== key));
+        saveState(store.getState());
     };
 
     return (
         <Router>
-            <h1>{t('apptitle')}</h1>
+            <Heading fontSize="4xl" as="h1" marginTop={5} marginBottom={5}>
+                {t('apptitle')}
+            </Heading>
 
             <PersonalDetails />
 
-            {sections.map((s, i) => (
-                <Collapsible
-                    containerElementProps={{
-                        className: 'resumeSection',
-                    }}
-                    key={s.configSection.key}
-                    accordionPosition={s.configSection.key}
-                    open={currentOpen === s.configSection.key}
-                    handleTriggerClick={handleTriggerClick}
-                    transitionTime={300}
-                    trigger={
-                        <ResumeSectionHeading
-                            title={s.configSection.title}
-                            sectionKey={s.configSection.key}
-                            onDeleteSection={handleDeleteSection}
-                        />
-                    }
-                >
-                    <>
-                        {sectionCmps[i]?.itemCmp && (
-                            <ResumeSectionContent
-                                config={s.configSection}
-                                ItemComponent={sectionCmps[i].itemCmp}
-                            />
-                        )}
-                    </>
-                </Collapsible>
-            ))}
+            <Accordion allowToggle>
+                {sections.map((s, i) => (
+                    <AccordionItem
+                        key={s.configSection.key}
+                        marginTop={5}
+                        bg="white"
+                        borderWidth="1px"
+                        borderRadius="lg"
+                        boxShadow="md"
+                    >
+                        <AccordionButton as="div">
+                            <Flex>
+                                <ResumeSectionHeading
+                                    title={s.configSection.title}
+                                />
+                                <Box marginLeft="auto">
+                                    <IconButton
+                                        aria-label="Delete section"
+                                        variant="ghost"
+                                        icon={<DeleteIcon />}
+                                        onClick={(e) =>
+                                            handleDeleteSectionClick(
+                                                e,
+                                                s.configSection.key,
+                                            )
+                                        }
+                                    />
+                                    <AccordionIcon />
+                                </Box>
+                            </Flex>
+                        </AccordionButton>
+                        <AccordionPanel>
+                            {sectionCmps[i]?.itemCmp && (
+                                <ResumeSectionContent
+                                    config={s.configSection}
+                                    ItemComponent={sectionCmps[i].itemCmp}
+                                />
+                            )}
+                        </AccordionPanel>
+                    </AccordionItem>
+                ))}
+            </Accordion>
 
             <AddContent onAddContent={addContent} />
         </Router>

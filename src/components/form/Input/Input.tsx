@@ -2,6 +2,12 @@ import React from 'react';
 import { FormInputElement } from '../FormTypes';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import {
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Input as InputCkrUI,
+} from '@chakra-ui/react';
 
 export const Input = ({
     element,
@@ -14,30 +20,28 @@ export const Input = ({
     > /** Object returned from useForm() hook */;
 }) => {
     const { register } = hookForm;
-    const required = element.registerOptions?.required;
+    const required = element.registerOptions?.required ? true : false;
+    const error = hookForm.formState.errors[element.key];
+    const isInvalid = error ? true : false;
     const { t } = useTranslation();
 
     return (
-        <>
+        <FormControl isRequired={required} isInvalid={isInvalid}>
             {element.label && (
-                <label htmlFor={element.inputProps?.id}>
+                <FormLabel htmlFor={element.inputProps?.id}>
                     {t(element.label)}
-                    {required ? '*' : ''}
-                </label>
+                </FormLabel>
             )}
-            <input
+
+            <InputCkrUI
                 {...element.inputProps}
-                required={required ? true : false}
+                required={required}
                 {...register(element.key, {
                     ...element.registerOptions,
                 })}
                 autoComplete="off"
             />
-            {hookForm.formState.errors[element.key] && (
-                <div className="formError" role="alert">
-                    {hookForm.formState.errors[element.key].message}
-                </div>
-            )}
-        </>
+            {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
+        </FormControl>
     );
 };

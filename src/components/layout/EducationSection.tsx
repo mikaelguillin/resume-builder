@@ -1,4 +1,6 @@
+import { Box, Flex, Heading, IconButton } from '@chakra-ui/react';
 import { FormElement } from '../form/FormTypes';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 export interface EducationItemProps {
     degree: string;
@@ -7,6 +9,7 @@ export interface EducationItemProps {
     country: string;
     description: string;
     onClick: () => void;
+    onDelete: () => void;
 }
 
 const formElements: FormElement[] = [
@@ -90,18 +93,32 @@ export const Item = ({
     country,
     description,
     onClick,
+    onDelete,
 }: EducationItemProps) => {
     return (
-        <div className="resumeSectionItem" onClick={onClick}>
-            <h3>
-                {degree}, <i>{school}</i>
-            </h3>
-            {(city || country) && (
+        <Box borderWidth={1} borderRadius="lg" padding={3} onClick={onClick}>
+            <Flex>
                 <div>
-                    {city}, {country}
+                    <Heading fontSize="xl" as="h3">
+                        {degree}, <i>{school}</i>
+                    </Heading>
+                    <div>
+                        {(city || country) && (
+                            <div>
+                                {city}, {country}
+                            </div>
+                        )}
+                        {/* {description && <p>{description}</p>} */}
+                    </div>
                 </div>
-            )}
-            {description && <p>{description}</p>}
-        </div>
+                <IconButton
+                    aria-label="Supprimer"
+                    variant="ghost"
+                    icon={<DeleteIcon />}
+                    onClick={onDelete}
+                    marginLeft="auto"
+                />
+            </Flex>
+        </Box>
     );
 };

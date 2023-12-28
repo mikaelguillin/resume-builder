@@ -1,34 +1,13 @@
 import React from 'react';
+import { Heading } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
-export const ResumeSectionHeading = ({
-    title,
-    sectionKey,
-    onDeleteSection,
-}: {
-    title: string;
-    sectionKey: string;
-    onDeleteSection: (key: string) => void;
-}) => {
+export const ResumeSectionHeading = ({ title }: { title: string }) => {
     const { t } = useTranslation();
 
-    const handleDeleteSectionClick = (
-        e: React.MouseEvent<HTMLButtonElement>,
-    ) => {
-        e.stopPropagation();
-        onDeleteSection(sectionKey);
-    };
-
     return (
-        <div className="titleWrapper">
-            <h2 className="title">{t(title)}</h2>
-            <button
-                className="button"
-                type="button"
-                onClick={handleDeleteSectionClick}
-            >
-                Delete section
-            </button>
-        </div>
+        <Heading fontSize="3xl" as="h2">
+            {t(title)}
+        </Heading>
     );
 };

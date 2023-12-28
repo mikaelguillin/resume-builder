@@ -34,6 +34,12 @@ export interface ResumeSection {
 
 export interface ResumeState {
     sections: ResumeSection[];
+    personalDetails: {
+        fullname: string;
+        jobTitle?: string;
+        email?: string;
+        address?: string;
+    };
 }
 
 interface ResumeSectionAction {
@@ -43,6 +49,12 @@ interface ResumeSectionAction {
 
 const initialState: ResumeState = {
     sections: [],
+    personalDetails: {
+        fullname: '',
+        jobTitle: '',
+        email: '',
+        address: '',
+    },
 };
 
 export const resumeSlice = createSlice({
@@ -53,7 +65,6 @@ export const resumeSlice = createSlice({
             state.sections.push(action.payload);
         },
         deleteSection: (state, action) => {
-            // state.sections.splice(action.payload, 1);
             state.sections = state.sections.filter(
                 (s) => s.name !== action.payload,
             );
@@ -92,9 +103,13 @@ export const resumeSlice = createSlice({
                 section.items = section.items.filter((si) => si.id !== item.id);
             }
         },
+        editPersonalDetails: (state, action) => {
+            state.personalDetails = action.payload;
+        },
     },
     selectors: {
         selectSections: (state) => state.sections,
+        selectPersonalDetails: (state) => state.personalDetails,
         selectItemsBySection: (state, sectionName: string) => {
             const section = state.sections.find((s) => s.name === sectionName);
             return section?.items || [];
@@ -108,8 +123,10 @@ export const {
     addItemToSection,
     editSectionItem,
     removeItemFromSection,
+    editPersonalDetails,
 } = resumeSlice.actions;
 
-export const { selectSections, selectItemsBySection } = resumeSlice.selectors;
+export const { selectSections, selectItemsBySection, selectPersonalDetails } =
+    resumeSlice.selectors;
 
 export default resumeSlice.reducer;
