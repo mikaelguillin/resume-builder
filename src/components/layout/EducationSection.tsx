@@ -1,6 +1,6 @@
-import { Box, Flex, Heading, IconButton } from '@chakra-ui/react';
+import { Box, Flex, Heading, Icon, IconButton } from '@chakra-ui/react';
 import { FormElement } from '../form/FormTypes';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { MdDelete } from 'react-icons/md';
 
 export interface EducationItemProps {
     degree: string;
@@ -84,6 +84,7 @@ export const configSection = {
     title: 'education.title',
     addItemLabel: 'education.additemlabel',
     formElements,
+    icon: 'MdSchool',
 };
 
 export const Item = ({
@@ -114,7 +115,7 @@ export const Item = ({
                 <IconButton
                     aria-label="Supprimer"
                     variant="ghost"
-                    icon={<DeleteIcon />}
+                    icon={<Icon as={MdDelete} />}
                     onClick={onDelete}
                     marginLeft="auto"
                 />

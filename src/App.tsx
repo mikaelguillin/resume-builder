@@ -24,11 +24,11 @@ import {
     AccordionItem,
     AccordionPanel,
     Box,
-    Flex,
     Heading,
+    Icon,
     IconButton,
 } from '@chakra-ui/react';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { MdDelete } from 'react-icons/md';
 
 interface SectionComponents {
     name: string;
@@ -114,25 +114,24 @@ const App = () => {
                         boxShadow="md"
                     >
                         <AccordionButton as="div">
-                            <Flex>
-                                <ResumeSectionHeading
-                                    title={s.configSection.title}
+                            <ResumeSectionHeading
+                                title={s.configSection.title}
+                                icon={s.configSection.icon}
+                            />
+                            <Box marginLeft="auto">
+                                <IconButton
+                                    aria-label="Delete section"
+                                    variant="ghost"
+                                    icon={<Icon as={MdDelete} boxSize={6} />}
+                                    onClick={(e) =>
+                                        handleDeleteSectionClick(
+                                            e,
+                                            s.configSection.key,
+                                        )
+                                    }
                                 />
-                                <Box marginLeft="auto">
-                                    <IconButton
-                                        aria-label="Delete section"
-                                        variant="ghost"
-                                        icon={<DeleteIcon />}
-                                        onClick={(e) =>
-                                            handleDeleteSectionClick(
-                                                e,
-                                                s.configSection.key,
-                                            )
-                                        }
-                                    />
-                                    <AccordionIcon />
-                                </Box>
-                            </Flex>
+                                <AccordionIcon />
+                            </Box>
                         </AccordionButton>
                         <AccordionPanel>
                             {sectionCmps[i]?.itemCmp && (

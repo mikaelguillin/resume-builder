@@ -15,8 +15,10 @@ import {
     CardBody,
     Heading,
     Text,
+    Icon,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import { MdSchool, MdWork } from 'react-icons/md';
 
 const AddContent = ({
     onAddContent,
@@ -56,6 +58,7 @@ const AddContent = ({
                             >
                                 <CardHeader>
                                     <Heading size="md">
+                                        <Icon as={MdSchool} />
                                         {t('education.title')}
                                     </Heading>
                                 </CardHeader>
@@ -74,6 +77,7 @@ const AddContent = ({
                             >
                                 <CardHeader>
                                     <Heading size="md">
+                                        <Icon as={MdWork} />
                                         {t('professionalexperience.title')}
                                     </Heading>
                                 </CardHeader>

@@ -1,6 +1,6 @@
-import { Box, Flex, Heading, IconButton } from '@chakra-ui/react';
+import { Box, Flex, Heading, IconButton, Icon } from '@chakra-ui/react';
 import { FormElement } from '../form/FormTypes';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { MdDelete } from 'react-icons/md';
 
 interface ExperienceItemProps {
     jobTitle: string;
@@ -84,6 +84,7 @@ export const configSection = {
     title: 'professionalexperience.title',
     addItemLabel: 'professionalexperience.additemlabel',
     formElements,
+    icon: 'MdWork',
 };
 
 export const Item = ({
@@ -114,7 +115,7 @@ export const Item = ({
                 <IconButton
                     aria-label="Supprimer"
                     variant="ghost"
-                    icon={<DeleteIcon />}
+                    icon={<Icon as={MdDelete} />}
                     onClick={onDelete}
                     marginLeft="auto"
                 />

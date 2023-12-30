@@ -28,6 +28,7 @@ export interface ResumeSection {
         title: string;
         addItemLabel: string;
         formElements: FormElement[];
+        icon: string;
     };
     items: SectionItem[];
 }
