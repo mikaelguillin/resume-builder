@@ -21,5 +21,7 @@
     "education.school": "Etablissement",
     "education.additemlabel": "Ajouter une formation",
     "downloadresume": "Télécharger le CV",
+    "download": "Télécharger",
+    "downloading": "Téléchargement...",
     "skills.title": "Compétences"
 }
