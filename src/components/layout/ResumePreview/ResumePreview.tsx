@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     selectPersonalDetails,
     selectSections,
@@ -7,15 +7,48 @@ import { Box, Heading, Text } from '@chakra-ui/layout';
 import { useSelector } from 'react-redux';
 import { Icon } from '@chakra-ui/icon';
 import * as MdIcon from 'react-icons/md';
+import { IconType } from 'react-icons';
 
 export const ResumePreview = () => {
     const personalDetails = useSelector(selectPersonalDetails);
     const sections = useSelector(selectSections);
+    const scaledWrapper = useRef<HTMLDivElement>(null);
+    const scaledContent = useRef<HTMLDivElement>(null);
+    const [scale, setScale] = useState<number | null>(null);
 
-    const root = {
+    const scaleResume = () => {
+        if (scaledWrapper.current && scaledContent.current) {
+            const scaledWrapperElem = scaledWrapper.current;
+            const scaledContentElem = scaledContent.current;
+
+            scaledContentElem.style.transform = 'scale(1, 1)';
+
+            const { width: cw, height: ch } =
+                scaledContentElem.getBoundingClientRect();
+
+            const { width: ww, height: wh } =
+                scaledWrapperElem.getBoundingClientRect();
+
+            const scaleAmtX = Math.min(ww / cw, wh / ch, 1);
+
+            setScale(scaleAmtX);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', scaleResume);
+        scaleResume();
+
+        return () => {
+            window.removeEventListener('resize', scaleResume);
+        };
+    }, []);
+
+    const resumePage = {
         fontFamily: 'Arial, sans-serif',
         fontSize: '14px',
-        padding: '1.25em',
+        padding: '8px',
+        pageBreakAfter: 'always',
     };
 
     const sectionHeading = {
@@ -38,52 +71,77 @@ export const ResumePreview = () => {
         lineHeight: 1.5,
     };
 
-    return (
-        <Box
-            id="resume-preview"
-            background="white"
-            width={'210mm'}
-            height={'297mm'}
-            style={root}
-        >
-            <Box>
-                <p style={{ margin: 0 }}>{personalDetails.fullname}</p>
-            </Box>
-            {sections.map((section, i) => (
-                <Box key={i} style={{ margin: '0.75em 0' }}>
-                    <Heading style={sectionHeading}>
-                        <Icon
-                            as={
-                                MdIcon[
-                                    section.configSection.icon as keyof IconType
-                                ]
-                            }
-                            style={sectionHeadingIcon}
-                        />{' '}
-                        {section.name}
-                    </Heading>
+    const sectionItemDescription = {
+        fontFamily: 'inherit',
+        fontSize: '14px',
+        lineHeight: 1.5,
+        whiteSpace: 'pre-line',
+        margin: 0,
+        letterSpacing: '0.1px',
+    };
 
-                    {section.items.map((sectionItem, j) => (
-                        <React.Fragment key={`${i}-${j}`}>
-                            {section.name === 'education' ? (
-                                <Text style={sectionItemHeading}>
-                                    {sectionItem.degree}, {sectionItem.school}
-                                </Text>
-                            ) : section.name === 'experience' ? (
-                                <>
-                                    <Text style={sectionItemHeading}>
-                                        {sectionItem.jobTitle},{' '}
-                                        {sectionItem.employer}
-                                    </Text>
-                                </>
-                            ) : null}
-                            <Box style={{ lineHeight: 1.5 }}>
-                                {sectionItem.description}
-                            </Box>
-                        </React.Fragment>
+    return (
+        <Box ref={scaledWrapper}>
+            <Box
+                id="resume-preview"
+                ref={scaledContent}
+                transformOrigin="0 0"
+                width="210mm"
+                height="297mm"
+                style={
+                    scale
+                        ? { transform: `scale(${scale}, ${scale})` }
+                        : undefined
+                }
+            >
+                <Box
+                    className="resume-page"
+                    background="white"
+                    width="210mm"
+                    height="297mm"
+                    style={resumePage}
+                >
+                    {sections.map((section, i) => (
+                        <Box key={i} style={{ margin: 0 }}>
+                            <Heading style={sectionHeading}>
+                                <Icon
+                                    as={
+                                        MdIcon[
+                                            section.configSection
+                                                .icon as keyof IconType
+                                        ]
+                                    }
+                                    style={sectionHeadingIcon}
+                                />{' '}
+                                {section.name}
+                            </Heading>
+
+                            {section.items.map((sectionItem, j) => (
+                                <React.Fragment key={`${i}-${j}`}>
+                                    {section.name === 'education' ? (
+                                        <Text style={sectionItemHeading}>
+                                            {sectionItem.degree},{' '}
+                                            {sectionItem.school}
+                                        </Text>
+                                    ) : section.name === 'experience' ? (
+                                        <>
+                                            <Text style={sectionItemHeading}>
+                                                {sectionItem.jobTitle},{' '}
+                                                {sectionItem.employer}
+                                            </Text>
+                                        </>
+                                    ) : null}
+                                    <Box>
+                                        <Text style={sectionItemDescription}>
+                                            {sectionItem.description}
+                                        </Text>
+                                    </Box>
+                                </React.Fragment>
+                            ))}
+                        </Box>
                     ))}
                 </Box>
-            ))}
+            </Box>
         </Box>
     );
 };

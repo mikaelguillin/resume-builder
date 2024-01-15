@@ -21,6 +21,7 @@ const {
     FormLabel,
     Heading,
     FormError,
+    Alert,
 } = chakraTheme.components;
 
 const theme = extendBaseTheme({
@@ -28,6 +29,9 @@ const theme = extendBaseTheme({
         global: {
             'html, body': {
                 bg: 'gray.100',
+            },
+            '*::-webkit-scrollbar': {
+                display: 'none',
             },
         },
     },
@@ -41,6 +45,7 @@ const theme = extendBaseTheme({
         FormLabel,
         Heading,
         FormError,
+        Alert,
     },
 });
 
