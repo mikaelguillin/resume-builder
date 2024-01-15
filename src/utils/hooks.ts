@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { throttle } from 'lodash';
+import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 
 export function useToggle(
     defaultValue: boolean,
@@ -25,3 +26,49 @@ export function usePrevious(value: any) {
 
     return previousRef.current;
 }
+
+export function useWindowSize() {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+        const updateSize = throttle(() => {
+            setSize([window.innerWidth, window.innerHeight]);
+        }, 300);
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+}
+
+export function useElemSizeOnWindowResize(elem?: HTMLElement | null) {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+        const updateSize = throttle(() => {
+            console.log({ elem });
+
+            if (elem) {
+                setSize([elem.clientWidth, elem.clientHeight]);
+            }
+        }, 300);
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+}
+
+export const useRefDimensions = (ref: any) => {
+    const [dimensions, setDimensions] = useState({ width: 1, height: 2 });
+    useEffect(() => {
+        if (ref.current) {
+            const { current } = ref;
+            const boundingRect = current.getBoundingClientRect();
+            const { width, height } = boundingRect;
+            setDimensions({
+                width: Math.round(width),
+                height: Math.round(height),
+            });
+        }
+    }, [ref]);
+    return dimensions;
+};
