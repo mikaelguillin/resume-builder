@@ -45,7 +45,8 @@ export interface ResumeState {
 
 interface ResumeSectionAction {
     sectionName: string;
-    item: SectionItem;
+    item?: SectionItem;
+    items?: SectionItem[];
 }
 
 const initialState: ResumeState = {
@@ -76,7 +77,7 @@ export const resumeSlice = createSlice({
         ) => {
             const { sectionName, item } = action.payload;
             const section = state.sections.find((s) => s.name === sectionName);
-            if (section) {
+            if (section && item) {
                 section.items.push(item);
             }
         },
@@ -85,13 +86,15 @@ export const resumeSlice = createSlice({
             action: PayloadAction<ResumeSectionAction>,
         ) => {
             const { sectionName, item } = action.payload;
-            const sectionToEdit = state.sections.findIndex(
-                (s) => s.name === sectionName,
-            );
-            const itemToEdit = state.sections[sectionToEdit].items.findIndex(
-                (i) => i.id === item.id,
-            );
-            state.sections[sectionToEdit].items[itemToEdit] = item;
+            if (item) {
+                const sectionToEdit = state.sections.findIndex(
+                    (s) => s.name === sectionName,
+                );
+                const itemToEdit = state.sections[
+                    sectionToEdit
+                ].items.findIndex((i) => i.id === item.id);
+                state.sections[sectionToEdit].items[itemToEdit] = item;
+            }
         },
         removeItemFromSection: (
             state,
@@ -100,12 +103,24 @@ export const resumeSlice = createSlice({
             const { sectionName, item } = action.payload;
             const section = state.sections.find((s) => s.name === sectionName);
 
-            if (section) {
+            if (section && item) {
                 section.items = section.items.filter((si) => si.id !== item.id);
             }
         },
         editPersonalDetails: (state, action) => {
             state.personalDetails = action.payload;
+        },
+        setSectionItems: (
+            state,
+            action: PayloadAction<ResumeSectionAction>,
+        ) => {
+            const { sectionName, items } = action.payload;
+            if (items) {
+                const sectionToEdit = state.sections.findIndex(
+                    (s) => s.name === sectionName,
+                );
+                state.sections[sectionToEdit].items = items;
+            }
         },
     },
     selectors: {
@@ -125,6 +140,7 @@ export const {
     editSectionItem,
     removeItemFromSection,
     editPersonalDetails,
+    setSectionItems,
 } = resumeSlice.actions;
 
 export const { selectSections, selectItemsBySection, selectPersonalDetails } =

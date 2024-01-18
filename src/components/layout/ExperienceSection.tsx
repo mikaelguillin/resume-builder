@@ -1,6 +1,5 @@
-import { Box, Flex, Heading, IconButton, Icon } from '@chakra-ui/react';
+import { Heading } from '@chakra-ui/react';
 import { FormElement } from '../form/FormTypes';
-import { MdDelete } from 'react-icons/md';
 
 interface ExperienceItemProps {
     jobTitle: string;
@@ -8,8 +7,6 @@ interface ExperienceItemProps {
     city: string;
     country: string;
     description: string;
-    onClick: () => void;
-    onDelete: () => void;
 }
 
 const formElements: FormElement[] = [
@@ -93,33 +90,20 @@ export const Item = ({
     city,
     country,
     description,
-    onClick,
-    onDelete,
 }: ExperienceItemProps) => {
     return (
-        <Box borderWidth={1} borderRadius="lg" padding={3} onClick={onClick}>
-            <Flex>
-                <div>
-                    <Heading fontSize="xl" as="h3">
-                        {jobTitle}, <i>{employer}</i>
-                    </Heading>
+        <div>
+            <Heading fontSize="xl" as="h3">
+                {jobTitle}, <i>{employer}</i>
+            </Heading>
+            <div>
+                {(city || country) && (
                     <div>
-                        {(city || country) && (
-                            <div>
-                                {city}, {country}
-                            </div>
-                        )}
-                        {/* {description && <p>{description}</p>} */}
+                        {city}, {country}
                     </div>
-                </div>
-                <IconButton
-                    aria-label="Supprimer"
-                    variant="ghost"
-                    icon={<Icon as={MdDelete} />}
-                    onClick={onDelete}
-                    marginLeft="auto"
-                />
-            </Flex>
-        </Box>
+                )}
+                {/* {description && <p>{description}</p>} */}
+            </div>
+        </div>
     );
 };

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { uniqueId } from 'lodash';
+import { Reorder } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import store, { AppState } from '@store/store';
@@ -11,15 +11,16 @@ import {
     removeItemFromSection,
     ResumeSection,
     SectionItem,
+    setSectionItems,
 } from '@store/resume/resume.slice';
 import { Form } from '@components/form';
 import { saveState } from '@/browser-storage';
 import { Button } from '@chakra-ui/react';
+import { uniqueId } from '@utils/utils';
+import { ResumeSectionItem } from '../ResumeSectionItem/ResumeSectionItem';
 
 export interface ResumeSectionItemProps {
     id: string;
-    onClick: () => void;
-    onDelete: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const ResumeSectionContent = ({
@@ -60,20 +61,29 @@ export const ResumeSectionContent = ({
         saveState(store.getState());
     };
 
-    const handleItemClick = (item: SectionItem) => {
-        setEditMode(true);
-        for (const { key, group } of config.formElements) {
-            if (group) {
-                for (const element of group) {
-                    hookForm.setValue(element.key, (item as any)[element.key]);
+    const handleItemClick = (e: MouseEvent<HTMLElement>, item: SectionItem) => {
+        if (!(e.target as HTMLElement).classList.contains('drag-handler')) {
+            setEditMode(true);
+            for (const { key, group } of config.formElements) {
+                if (group) {
+                    for (const element of group) {
+                        hookForm.setValue(
+                            element.key,
+                            (item as any)[element.key],
+                        );
+                    }
+                } else {
+                    hookForm.setValue(key, (item as any)[key]);
                 }
-            } else {
-                hookForm.setValue(key, (item as any)[key]);
             }
         }
     };
 
-    const handleDeleteItemClick = (item: SectionItem) => {
+    const handleDeleteItemClick = (
+        e: MouseEvent<HTMLElement>,
+        item: SectionItem,
+    ) => {
+        e.stopPropagation();
         dispatch(removeItemFromSection({ sectionName: config.key, item }));
         saveState(store.getState());
     };
@@ -81,6 +91,11 @@ export const ResumeSectionContent = ({
     const handleCancelClick = () => {
         hookForm.clearErrors();
         setEditMode(false);
+    };
+
+    const handleReorderItems = (items: SectionItem[]) => {
+        dispatch(setSectionItems({ sectionName: config.key, items }));
+        saveState(store.getState());
     };
 
     return (
@@ -94,17 +109,23 @@ export const ResumeSectionContent = ({
                 />
             ) : (
                 <div>
-                    {items.map((item, i) => (
-                        <ItemComponent
-                            {...item}
-                            key={i}
-                            onClick={() => handleItemClick(item)}
-                            onDelete={(e) => {
-                                e.stopPropagation();
-                                handleDeleteItemClick(item);
-                            }}
-                        />
-                    ))}
+                    <Reorder.Group
+                        values={items}
+                        onReorder={handleReorderItems}
+                        axis="y"
+                        as="div"
+                    >
+                        {items.map((item) => (
+                            <ResumeSectionItem
+                                key={item.id}
+                                item={item}
+                                onClick={(e) => handleItemClick(e, item)}
+                                onDelete={(e) => handleDeleteItemClick(e, item)}
+                            >
+                                <ItemComponent {...item} />
+                            </ResumeSectionItem>
+                        ))}
+                    </Reorder.Group>
 
                     <Button colorScheme="blue" onClick={addItem} marginTop={5}>
                         {t(config.addItemLabel)}
