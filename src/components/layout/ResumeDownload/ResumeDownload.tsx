@@ -16,7 +16,7 @@ export const ResumeDownload = () => {
             document.querySelector('#resume-preview')?.outerHTML;
 
         try {
-            const response = await fetch(`${API_URL}/pdf`, {
+            const response = await fetch(`${API_URL}/resume/pdf`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
