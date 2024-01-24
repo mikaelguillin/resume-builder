@@ -1,11 +1,14 @@
 import { Heading } from '@chakra-ui/react';
 import { FormElement } from '../form/FormTypes';
+import { ItemDate } from '@/store/resume/resume.slice';
 
 interface ExperienceItemProps {
     jobTitle: string;
     employer: string;
     city: string;
     country: string;
+    startDate: ItemDate;
+    endDate: ItemDate;
     description: string;
 }
 
@@ -66,6 +69,28 @@ const formElements: FormElement[] = [
         ],
     },
     {
+        key: 'date',
+        type: 'group',
+        group: [
+            {
+                key: 'startDate',
+                type: 'datepicker',
+                label: 'startDate',
+                yearsRegisterOptions: {
+                    required: 'Start year is required',
+                },
+            },
+            {
+                key: 'endDate',
+                type: 'datepicker',
+                label: 'endDate',
+                yearsRegisterOptions: {
+                    required: 'Start year is required',
+                },
+            },
+        ],
+    },
+    {
         key: 'description',
         type: 'textarea',
         label: 'description',
@@ -89,7 +114,6 @@ export const Item = ({
     employer,
     city,
     country,
-    description,
 }: ExperienceItemProps) => {
     return (
         <div>
@@ -102,7 +126,6 @@ export const Item = ({
                         {city}, {country}
                     </div>
                 )}
-                {/* {description && <p>{description}</p>} */}
             </div>
         </div>
     );

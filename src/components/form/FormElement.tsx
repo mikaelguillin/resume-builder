@@ -4,6 +4,7 @@ import { FormElement } from './FormTypes';
 import { Input } from './Input/Input';
 import { Select } from './Select/Select';
 import { Textarea } from './Textarea/Textarea';
+import { Datepicker } from './Datepicker/Datepicker';
 
 export const RenderFormControl = (props: {
     element: FormElement;
@@ -20,6 +21,6 @@ export const RenderFormControl = (props: {
         case 'select':
             return <Select element={element} hookForm={hookForm} />;
         case 'datepicker':
-            return <p>Date Picker</p>;
+            return <Datepicker element={element} hookForm={hookForm} />;
     }
 };

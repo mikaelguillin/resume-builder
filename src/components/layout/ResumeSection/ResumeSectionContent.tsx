@@ -64,16 +64,19 @@ export const ResumeSectionContent = ({
     const handleItemClick = (e: MouseEvent<HTMLElement>, item: SectionItem) => {
         if (!(e.target as HTMLElement).classList.contains('drag-handler')) {
             setEditMode(true);
-            for (const { key, group } of config.formElements) {
-                if (group) {
-                    for (const element of group) {
+            for (const formElem of config.formElements) {
+                if ('group' in formElem && formElem.group) {
+                    for (const groupElem of formElem.group) {
                         hookForm.setValue(
-                            element.key,
-                            (item as any)[element.key],
+                            groupElem.key,
+                            (item as any)[groupElem.key],
                         );
                     }
                 } else {
-                    hookForm.setValue(key, (item as any)[key]);
+                    hookForm.setValue(
+                        formElem.key,
+                        (item as any)[formElem.key],
+                    );
                 }
             }
         }

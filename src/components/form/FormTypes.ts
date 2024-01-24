@@ -6,7 +6,6 @@ export interface FormCoreElement {
     label?: string /** To show labels above our field */;
     registerOptions?: RegisterOptions /** Allows us to pass additional options to the register method */;
     hidden?: boolean /** Hide the field based on a condition */;
-    group?: FormElement[];
 }
 
 export interface FormInputElement extends FormCoreElement {
@@ -25,13 +24,18 @@ export interface FormSelectElement extends FormCoreElement {
     selectProps?: React.ComponentProps<typeof Select>;
 }
 
-export interface FormDatePickerElement extends FormCoreElement {
+export interface FormDatePickerElement
+    extends Omit<FormCoreElement, 'registerOptions'> {
     type: 'datepicker';
-    datepickerProps?: any;
+    monthsSelectProps?: React.ComponentProps<typeof Select>;
+    yearsSelectProps?: React.ComponentProps<typeof Select>;
+    monthsRegisterOptions?: RegisterOptions;
+    yearsRegisterOptions?: RegisterOptions;
 }
 
 export interface FormGroupElement extends FormCoreElement {
     type: 'group';
+    group: FormElement[];
 }
 
 export type FormElement =

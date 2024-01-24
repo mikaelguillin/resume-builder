@@ -23,5 +23,10 @@
     "downloadresume": "Download resume",
     "download": "Download",
     "downloading": "Downloading...",
-    "skills.title": "Skills"
+    "skills.title": "Skills",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "date.yearmissing": "Year is missing",
+    "datepicker.resetmonth": "Reset month",
+    "datepicker.resetyear": "Reset year"
 }

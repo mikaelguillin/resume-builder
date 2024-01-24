@@ -1,12 +1,19 @@
 import { FormElement } from '@components/form/FormTypes';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
+export interface ItemDate {
+    month: string;
+    year: string;
+}
+
 interface ExperienceItem {
     id: string;
     jobTitle: string;
     employer: string;
     city: string;
     country: string;
+    startDate: ItemDate;
+    endDate: ItemDate;
     description: string;
 }
 
@@ -16,6 +23,8 @@ interface EducationItem {
     school: string;
     city: string;
     country: string;
+    startDate: ItemDate;
+    endDate: ItemDate;
     description: string;
 }
 

@@ -1,11 +1,14 @@
 import { Heading } from '@chakra-ui/react';
 import { FormElement } from '../form/FormTypes';
+import { ItemDate } from '@/store/resume/resume.slice';
 
 export interface EducationItemProps {
     degree: string;
     school: string;
     city: string;
     country: string;
+    startDate: ItemDate;
+    endDate: ItemDate;
     description: string;
 }
 
@@ -66,6 +69,28 @@ const formElements: FormElement[] = [
         ],
     },
     {
+        key: 'date',
+        type: 'group',
+        group: [
+            {
+                key: 'startDate',
+                type: 'datepicker',
+                label: 'startDate',
+                yearsRegisterOptions: {
+                    required: 'Start year is required',
+                },
+            },
+            {
+                key: 'endDate',
+                type: 'datepicker',
+                label: 'endDate',
+                yearsRegisterOptions: {
+                    required: 'Start year is required',
+                },
+            },
+        ],
+    },
+    {
         key: 'description',
         type: 'textarea',
         label: 'Description',
@@ -84,13 +109,7 @@ export const configSection = {
     icon: 'MdSchool',
 };
 
-export const Item = ({
-    degree,
-    school,
-    city,
-    country,
-    description,
-}: EducationItemProps) => {
+export const Item = ({ degree, school, city, country }: EducationItemProps) => {
     return (
         <div>
             <Heading fontSize="xl" as="h3">
@@ -102,7 +121,6 @@ export const Item = ({
                         {city}, {country}
                     </div>
                 )}
-                {/* {description && <p>{description}</p>} */}
             </div>
         </div>
     );

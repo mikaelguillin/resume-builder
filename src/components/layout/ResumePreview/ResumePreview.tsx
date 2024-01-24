@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
+    ItemDate,
     selectPersonalDetails,
     selectSections,
 } from '@store/resume/resume.slice';
@@ -8,6 +9,38 @@ import { useSelector } from 'react-redux';
 import { Icon } from '@chakra-ui/icon';
 import * as MdIcon from 'react-icons/md';
 import { IconType } from 'react-icons';
+
+const displayDates = (startDate: ItemDate, endDate: ItemDate) => {
+    let startD = '';
+    let endD = '';
+    let date = '';
+
+    if (startDate?.year) {
+        startD = startDate.year;
+
+        if (startDate.month) {
+            startD = `${startDate.month}/${startDate.year}`;
+        }
+
+        date = startD;
+    }
+
+    if (endDate?.year) {
+        endD = endDate.year;
+
+        if (endDate.month) {
+            endD = `${endDate.month}/${endDate.year}`;
+        }
+
+        if (startDate.year) {
+            date = `${startD} - ${endD}`;
+        } else {
+            date = endD;
+        }
+    }
+
+    return date;
+};
 
 export const ResumePreview = () => {
     const personalDetails = useSelector(selectPersonalDetails);
@@ -116,28 +149,41 @@ export const ResumePreview = () => {
                                 {section.name}
                             </Heading>
 
-                            {section.items.map((sectionItem, j) => (
-                                <React.Fragment key={`${i}-${j}`}>
-                                    {section.name === 'education' ? (
-                                        <Text style={sectionItemHeading}>
-                                            {sectionItem.degree},{' '}
-                                            {sectionItem.school}
-                                        </Text>
-                                    ) : section.name === 'experience' ? (
-                                        <>
+                            {section.items.map((sectionItem, j) => {
+                                const date = displayDates(
+                                    sectionItem.startDate,
+                                    sectionItem.endDate,
+                                );
+                                return (
+                                    <React.Fragment key={`${i}-${j}`}>
+                                        {section.name === 'education' &&
+                                        'degree' in sectionItem ? (
                                             <Text style={sectionItemHeading}>
-                                                {sectionItem.jobTitle},{' '}
-                                                {sectionItem.employer}
+                                                {sectionItem.degree},{' '}
+                                                {sectionItem.school}
                                             </Text>
-                                        </>
-                                    ) : null}
-                                    <Box>
-                                        <Text style={sectionItemDescription}>
-                                            {sectionItem.description}
-                                        </Text>
-                                    </Box>
-                                </React.Fragment>
-                            ))}
+                                        ) : section.name === 'experience' &&
+                                          'jobTitle' in sectionItem ? (
+                                            <>
+                                                <Text
+                                                    style={sectionItemHeading}
+                                                >
+                                                    {sectionItem.jobTitle},{' '}
+                                                    {sectionItem.employer}
+                                                </Text>
+                                            </>
+                                        ) : null}
+                                        {date ? <Text>{date}</Text> : null}
+                                        {sectionItem.description ? (
+                                            <Text
+                                                style={sectionItemDescription}
+                                            >
+                                                {sectionItem.description}
+                                            </Text>
+                                        ) : null}
+                                    </React.Fragment>
+                                );
+                            })}
                         </Box>
                     ))}
                 </Box>

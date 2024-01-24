@@ -23,5 +23,10 @@
     "downloadresume": "Télécharger le CV",
     "download": "Télécharger",
     "downloading": "Téléchargement...",
-    "skills.title": "Compétences"
+    "skills.title": "Compétences",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "datepicker.yearmissing": "Année manquante",
+    "datepicker.resetmonth": "Réinitialiser le mois",
+    "datepicker.resetyear": "Réinitialiser l'année"
 }

@@ -19,7 +19,7 @@ export const Form = ({
         <form onSubmit={hookForm.handleSubmit(onSubmit)} noValidate>
             <div>
                 {elements.map((res, key) => {
-                    if (res.group) {
+                    if ('group' in res && res.group) {
                         return (
                             <Flex
                                 marginTop={2}
