@@ -1,5 +1,9 @@
 {
     "apptitle": "Resume builder",
+    "nav.content": "Contenu",
+    "nav.customization": "Customisation",
+    "nav.lng.french": "Français",
+    "nav.lng.english": "Anglais",
     "save": "Enregistrer",
     "cancel": "Annuler",
     "addsection": "Ajouter une section",
@@ -28,5 +32,6 @@
     "endDate": "Date de fin",
     "datepicker.yearmissing": "Année manquante",
     "datepicker.resetmonth": "Réinitialiser le mois",
-    "datepicker.resetyear": "Réinitialiser l'année"
+    "datepicker.resetyear": "Réinitialiser l'année",
+    "resumecustomization.reordersections": "Réordonner les sections"
 }

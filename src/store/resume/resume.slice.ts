@@ -53,7 +53,8 @@ export interface ResumeState {
 }
 
 interface ResumeSectionAction {
-    sectionName: string;
+    sectionName?: string;
+    sections?: ResumeSection[];
     item?: SectionItem;
     items?: SectionItem[];
 }
@@ -119,6 +120,16 @@ export const resumeSlice = createSlice({
         editPersonalDetails: (state, action) => {
             state.personalDetails = action.payload;
         },
+        setSections: (state, action: PayloadAction<ResumeSectionAction>) => {
+            const { sections } = action.payload;
+            if (sections) {
+                return {
+                    ...state,
+                    sections,
+                };
+            }
+            return state;
+        },
         setSectionItems: (
             state,
             action: PayloadAction<ResumeSectionAction>,
@@ -150,6 +161,7 @@ export const {
     removeItemFromSection,
     editPersonalDetails,
     setSectionItems,
+    setSections,
 } = resumeSlice.actions;
 
 export const { selectSections, selectItemsBySection, selectPersonalDetails } =

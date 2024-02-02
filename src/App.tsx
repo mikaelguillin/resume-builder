@@ -1,33 +1,22 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Box, Flex, Grid, GridItem, Heading } from '@chakra-ui/react';
-import { ResumePreview } from '@components/layout/ResumePreview/ResumePreview';
-import { ResumeDownload } from '@components/layout/ResumeDownload/ResumeDownload';
-import { ResumeConfiguration } from '@components/layout/ResumeConfiguration/ResumeConfiguration';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Header } from '@components/layout/Header/Header';
+import { ResumeContent } from './pages/ResumeContent/ResumeContent';
+import { ResumeCustomization } from './pages/ResumeCustomization/ResumeCustomization';
+
+import './App.css';
 
 const App = () => {
-    const { t } = useTranslation();
-
     return (
         <Router>
-            <Box padding="0 10px">
-                <Flex alignItems="center" height="70px">
-                    <Heading fontSize="4xl" as="h1">
-                        {t('apptitle')}
-                    </Heading>
-                    <ResumeDownload />
-                </Flex>
-
-                <Grid gridTemplateColumns="max(650px) auto" gap={5}>
-                    <GridItem maxHeight="calc(100vh - 70px)" overflow="auto">
-                        <ResumeConfiguration />
-                    </GridItem>
-                    <GridItem maxHeight="calc(100vh - 70px)" overflow="auto">
-                        <ResumePreview />
-                    </GridItem>
-                </Grid>
-            </Box>
+            <Header />
+            <Routes>
+                <Route path="/" element={<ResumeContent />} />
+                <Route
+                    path="/customization"
+                    element={<ResumeCustomization />}
+                />
+                <Route path="*" element={<p>404</p>} />
+            </Routes>
         </Router>
     );
 };

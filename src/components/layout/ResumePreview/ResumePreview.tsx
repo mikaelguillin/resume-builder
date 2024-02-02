@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-    ItemDate,
     selectPersonalDetails,
     selectSections,
 } from '@store/resume/resume.slice';
@@ -9,38 +8,7 @@ import { useSelector } from 'react-redux';
 import { Icon } from '@chakra-ui/icon';
 import * as MdIcon from 'react-icons/md';
 import { IconType } from 'react-icons';
-
-const displayDates = (startDate: ItemDate, endDate: ItemDate) => {
-    let startD = '';
-    let endD = '';
-    let date = '';
-
-    if (startDate?.year) {
-        startD = startDate.year;
-
-        if (startDate.month) {
-            startD = `${startDate.month}/${startDate.year}`;
-        }
-
-        date = startD;
-    }
-
-    if (endDate?.year) {
-        endD = endDate.year;
-
-        if (endDate.month) {
-            endD = `${endDate.month}/${endDate.year}`;
-        }
-
-        if (startDate.year) {
-            date = `${startD} - ${endD}`;
-        } else {
-            date = endD;
-        }
-    }
-
-    return date;
-};
+import { displayResumeDates } from '@utils/utils';
 
 export const ResumePreview = () => {
     const personalDetails = useSelector(selectPersonalDetails);
@@ -82,6 +50,7 @@ export const ResumePreview = () => {
         fontSize: '14px',
         padding: '8px',
         pageBreakAfter: 'always',
+        lineHeight: 1.2,
     };
 
     const sectionHeading = {
@@ -134,6 +103,14 @@ export const ResumePreview = () => {
                     height="297mm"
                     style={resumePage}
                 >
+                    <Box style={{ margin: 0 }}>
+                        <Text style={{ margin: 0, textAlign: 'center' }}>
+                            {personalDetails.fullname}
+                        </Text>
+                        <Text style={{ margin: 0, textAlign: 'center' }}>
+                            {personalDetails.jobTitle}
+                        </Text>
+                    </Box>
                     {sections.map((section, i) => (
                         <Box key={i} style={{ margin: 0 }}>
                             <Heading style={sectionHeading}>
@@ -149,13 +126,13 @@ export const ResumePreview = () => {
                                 {section.name}
                             </Heading>
 
-                            {section.items.map((sectionItem, j) => {
-                                const date = displayDates(
+                            {section.items.map((sectionItem) => {
+                                const date = displayResumeDates(
                                     sectionItem.startDate,
                                     sectionItem.endDate,
                                 );
                                 return (
-                                    <React.Fragment key={`${i}-${j}`}>
+                                    <React.Fragment key={sectionItem.id}>
                                         {section.name === 'education' &&
                                         'degree' in sectionItem ? (
                                             <Text style={sectionItemHeading}>
@@ -173,7 +150,11 @@ export const ResumePreview = () => {
                                                 </Text>
                                             </>
                                         ) : null}
-                                        {date ? <Text>{date}</Text> : null}
+                                        {date ? (
+                                            <Text style={{ margin: 0 }}>
+                                                {date}
+                                            </Text>
+                                        ) : null}
                                         {sectionItem.description ? (
                                             <Text
                                                 style={sectionItemDescription}

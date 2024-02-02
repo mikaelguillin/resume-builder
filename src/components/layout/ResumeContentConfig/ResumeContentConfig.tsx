@@ -26,16 +26,18 @@ import { saveState } from '@/browser-storage';
 import store from '@store/store';
 import { MdDelete } from 'react-icons/md';
 import { upperFirst } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 interface SectionComponents {
     name: string;
     itemCmp: ComponentType<ResumeSectionItemProps>;
 }
 
-export const ResumeConfiguration = () => {
+export const ResumeContentConfig = () => {
     const dispatch = useDispatch();
     const sections = useSelector(selectSections);
     const [sectionCmps, setSectionCmps] = useState<SectionComponents[]>([]);
+    const { t } = useTranslation();
 
     const loadContent = useCallback(() => {
         const loadedSectionCmps = sections.map(async (section) => {
@@ -106,7 +108,7 @@ export const ResumeConfiguration = () => {
                     >
                         <AccordionButton as="div">
                             <ResumeSectionHeading
-                                title={s.configSection.title}
+                                title={t(s.configSection.title)}
                                 icon={s.configSection.icon}
                             />
                             <Box marginLeft="auto">
