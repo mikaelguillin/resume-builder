@@ -47,7 +47,7 @@ export const ResumePreview = () => {
 
     const resumePage = {
         fontFamily: 'Arial, sans-serif',
-        fontSize: '14px',
+        fontSize: '10pt',
         padding: '8px',
         pageBreakAfter: 'always',
         lineHeight: 1.2,

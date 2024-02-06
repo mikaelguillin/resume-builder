@@ -48,6 +48,7 @@ export interface ResumeState {
         fullname: string;
         jobTitle?: string;
         email?: string;
+        phone?: string;
         address?: string;
     };
 }

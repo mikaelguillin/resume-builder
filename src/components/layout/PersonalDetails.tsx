@@ -1,10 +1,9 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Form } from '@components/form';
 import { FormElement } from '@components/form/FormTypes';
 import { useToggle } from '@utils/hooks';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, Heading } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Icon } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     editPersonalDetails,
@@ -12,6 +11,7 @@ import {
 } from '@store/resume/resume.slice';
 import { saveState } from '@/browser-storage';
 import store, { AppState } from '@store/store';
+import { MdLocationPin, MdMail, MdPhone } from 'react-icons/md';
 
 const formElements: FormElement[] = [
     {
@@ -78,7 +78,7 @@ export const PersonalDetails = () => {
     const personalDetails = useSelector((state: AppState) =>
         selectPersonalDetails(state),
     );
-    const { fullname, jobTitle, email, address } = personalDetails;
+    const { fullname, jobTitle, email, phone, address } = personalDetails;
 
     const handleCancelClick = () => {
         toggleEditMode();
@@ -118,14 +118,30 @@ export const PersonalDetails = () => {
                 />
             ) : (
                 <>
-                    <div>
+                    <Box>
                         {fullname && (
                             <Heading fontSize="xl">{fullname}</Heading>
                         )}
-                        {jobTitle && <div>{jobTitle}</div>}
-                        {email && <div>{email}</div>}
-                        {address && <div>{address}</div>}
-                    </div>
+                        {jobTitle && <Box>{jobTitle}</Box>}
+                        {email && (
+                            <Flex alignItems="center" marginTop={2}>
+                                <Icon as={MdMail} marginRight={2} />
+                                {email}
+                            </Flex>
+                        )}
+                        {phone && (
+                            <Flex alignItems="center" marginTop={2}>
+                                <Icon as={MdPhone} marginRight={2} />
+                                {phone}
+                            </Flex>
+                        )}
+                        {address && (
+                            <Flex alignItems="center" marginTop={2}>
+                                <Icon as={MdLocationPin} marginRight={2} />
+                                {address}
+                            </Flex>
+                        )}
+                    </Box>
                     <Button
                         marginTop={3}
                         colorScheme="blue"
