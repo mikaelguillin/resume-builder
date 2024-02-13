@@ -1,16 +1,6 @@
 import { Heading } from '@chakra-ui/react';
 import { FormElement } from '../form/FormTypes';
-import { ItemDate } from '@/store/resume/resume.slice';
-
-export interface EducationItemProps {
-    degree: string;
-    school: string;
-    city: string;
-    country: string;
-    startDate: ItemDate;
-    endDate: ItemDate;
-    description: string;
-}
+import type { EducationItem } from '@store/resume/resume.slice';
 
 const formElements: FormElement[] = [
     {
@@ -109,7 +99,7 @@ export const configSection = {
     icon: 'MdSchool',
 };
 
-export const Item = ({ degree, school, city, country }: EducationItemProps) => {
+export const Item = ({ degree, school, city, country }: EducationItem) => {
     return (
         <div>
             <Heading fontSize="xl" as="h3">

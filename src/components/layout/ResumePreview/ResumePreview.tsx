@@ -9,6 +9,7 @@ import { Icon } from '@chakra-ui/icon';
 import * as MdIcon from 'react-icons/md';
 import { IconType } from 'react-icons';
 import { displayResumeDates } from '@utils/utils';
+import { useTranslation } from 'react-i18next';
 
 export const ResumePreview = () => {
     const personalDetails = useSelector(selectPersonalDetails);
@@ -16,6 +17,7 @@ export const ResumePreview = () => {
     const scaledWrapper = useRef<HTMLDivElement>(null);
     const scaledContent = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState<number | null>(null);
+    const { t } = useTranslation();
 
     const scaleResume = () => {
         if (scaledWrapper.current && scaledContent.current) {
@@ -123,7 +125,7 @@ export const ResumePreview = () => {
                                     }
                                     style={sectionHeadingIcon}
                                 />{' '}
-                                {section.name}
+                                {t(section.configSection.title)}
                             </Heading>
 
                             {section.items.map((sectionItem) => {

@@ -1,12 +1,12 @@
 import { FormElement } from '@components/form/FormTypes';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-export interface ItemDate {
+interface ItemDate {
     month: string;
     year: string;
 }
 
-interface ExperienceItem {
+export interface ExperienceItem {
     id: string;
     jobTitle: string;
     employer: string;
@@ -17,7 +17,7 @@ interface ExperienceItem {
     description: string;
 }
 
-interface EducationItem {
+export interface EducationItem {
     id: string;
     degree: string;
     school: string;
@@ -54,6 +54,10 @@ export interface ResumeState {
 }
 
 interface ResumeSectionAction {
+    sectionItem?: {
+        key: keyof ResumeSection['configSection'];
+        value: any;
+    };
     sectionName?: string;
     sections?: ResumeSection[];
     item?: SectionItem;
@@ -143,6 +147,21 @@ export const resumeSlice = createSlice({
                 state.sections[sectionToEdit].items = items;
             }
         },
+        setSectionProperty: (
+            state,
+            action: PayloadAction<ResumeSectionAction>,
+        ) => {
+            const { sectionItem, sectionName } = action.payload;
+
+            const sectionToEdit = state.sections.findIndex(
+                (s) => s.name === sectionName,
+            );
+
+            if (sectionItem) {
+                state.sections[sectionToEdit].configSection[sectionItem.key] =
+                    sectionItem.value;
+            }
+        },
     },
     selectors: {
         selectSections: (state) => state.sections,
@@ -163,6 +182,7 @@ export const {
     editPersonalDetails,
     setSectionItems,
     setSections,
+    setSectionProperty,
 } = resumeSlice.actions;
 
 export const { selectSections, selectItemsBySection, selectPersonalDetails } =

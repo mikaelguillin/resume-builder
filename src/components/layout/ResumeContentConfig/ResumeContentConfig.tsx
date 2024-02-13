@@ -106,34 +106,46 @@ export const ResumeContentConfig = () => {
                         borderRadius="lg"
                         boxShadow="md"
                     >
-                        <AccordionButton as="div">
-                            <ResumeSectionHeading
-                                title={t(s.configSection.title)}
-                                icon={s.configSection.icon}
-                            />
-                            <Box marginLeft="auto">
-                                <IconButton
-                                    aria-label="Delete section"
-                                    variant="ghost"
-                                    icon={<Icon as={MdDelete} boxSize={6} />}
-                                    onClick={(e) =>
-                                        handleDeleteSectionClick(
-                                            e,
-                                            s.configSection.key,
-                                        )
-                                    }
-                                />
-                                <AccordionIcon />
-                            </Box>
-                        </AccordionButton>
-                        <AccordionPanel>
-                            {sectionCmps[i]?.itemCmp && (
-                                <ResumeSectionContent
-                                    config={s.configSection}
-                                    ItemComponent={sectionCmps[i].itemCmp}
-                                />
-                            )}
-                        </AccordionPanel>
+                        {({ isExpanded }) => (
+                            <>
+                                <AccordionButton as="div">
+                                    <ResumeSectionHeading
+                                        sectionName={s.name}
+                                        configSection={s.configSection}
+                                        editMode={isExpanded}
+                                    />
+                                    <Box marginLeft="auto">
+                                        <IconButton
+                                            aria-label="Delete section"
+                                            variant="ghost"
+                                            icon={
+                                                <Icon
+                                                    as={MdDelete}
+                                                    boxSize={6}
+                                                />
+                                            }
+                                            onClick={(e) =>
+                                                handleDeleteSectionClick(
+                                                    e,
+                                                    s.configSection.key,
+                                                )
+                                            }
+                                        />
+                                        <AccordionIcon />
+                                    </Box>
+                                </AccordionButton>
+                                <AccordionPanel>
+                                    {sectionCmps[i]?.itemCmp && (
+                                        <ResumeSectionContent
+                                            config={s.configSection}
+                                            ItemComponent={
+                                                sectionCmps[i].itemCmp
+                                            }
+                                        />
+                                    )}
+                                </AccordionPanel>
+                            </>
+                        )}
                     </AccordionItem>
                 ))}
             </Accordion>

@@ -1,16 +1,6 @@
 import { Heading } from '@chakra-ui/react';
 import { FormElement } from '../form/FormTypes';
-import { ItemDate } from '@/store/resume/resume.slice';
-
-interface ExperienceItemProps {
-    jobTitle: string;
-    employer: string;
-    city: string;
-    country: string;
-    startDate: ItemDate;
-    endDate: ItemDate;
-    description: string;
-}
+import type { ExperienceItem } from '@store/resume/resume.slice';
 
 const formElements: FormElement[] = [
     {
@@ -109,12 +99,7 @@ export const configSection = {
     icon: 'MdWork',
 };
 
-export const Item = ({
-    jobTitle,
-    employer,
-    city,
-    country,
-}: ExperienceItemProps) => {
+export const Item = ({ jobTitle, employer, city, country }: ExperienceItem) => {
     return (
         <div>
             <Heading fontSize="xl" as="h3">

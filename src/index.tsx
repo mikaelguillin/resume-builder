@@ -22,6 +22,7 @@ const {
     Heading,
     FormError,
     Alert,
+    Menu,
 } = chakraTheme.components;
 
 const theme = extendBaseTheme({
@@ -46,6 +47,7 @@ const theme = extendBaseTheme({
         Heading,
         FormError,
         Alert,
+        Menu,
     },
 });
 
